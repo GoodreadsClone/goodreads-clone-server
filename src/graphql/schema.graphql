@@ -1,9 +1,40 @@
-type Query {
+type Book {
+  id: ID!
+  title: String!
+  authorName: String!
+  authorId: ID!
+  rating: Int
+  isbn: String!
+}
+
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  books: [Book]
+  wantToReads: [Book]
+  currentlyReading: Book
+}
+
+type Author {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
   books: [Book]
 }
 
-type Book {
-  id: ID
-  title: String
-  author: String
+type Comment {
+  id: ID!
+  userId: ID!
+  bookId: ID!
+  comment: String!
+}
+
+type Query {
+  books: [Book]
+  users: [User]
+  authors: [Author]
+  comments: [Comment]
 }

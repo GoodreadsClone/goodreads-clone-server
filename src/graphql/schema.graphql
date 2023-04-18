@@ -36,5 +36,11 @@ type Query {
   books: [Book]
   users: [User]
   authors: [Author]
-  comments: [Comment]
+
+  book(id: ID!): Book
+  # user(id: ID!): User
+  # author(id: ID!): Author
+
+  # # Query comments for each book
+  # comments(bookId: ID!): [Comment]
 }

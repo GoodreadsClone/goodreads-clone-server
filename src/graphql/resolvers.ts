@@ -14,5 +14,10 @@ const books = [
 export const resolvers = {
     Query: {
       books: () => books,
+      
+      book: (parent, args) => {
+        const id = args.id
+        return books.find(book => book.id === id)
+      }
     },
 };

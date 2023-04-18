@@ -1,26 +1,26 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinTable} from "typeorm"
-import {inspect} from "util";
-import colors = module
-
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
+import { Book } from './Book.js'
 
 @Entity()
 export class Author {
     @PrimaryGeneratedColumn()
-    author_id: number
+    id: number
 
     @Column()
-    author_name: string
+    firstName: string
 
+    @Column()
+    lastName: string
+
+    @Column()
+    email: string
 
     @Column({type:"float"})
-    author_rating
+    rating
 
     @Column()
-    publishing_house: string
+    publishingHouse: string
 
-
-
-
-
+    @OneToMany((type) => Book, (book) => book)
+    books: Book[]
 }

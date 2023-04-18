@@ -1,6 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinTable} from "typeorm"
-import {JoinColumn} from "typeorm/browser";
-import {Book} from "./Book";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm"
+import { Book } from "./Book.js";
 
 @Entity()
 export class User {
@@ -20,7 +19,5 @@ export class User {
     password: string
 
     @OneToOne((type) => Book)
-    current_book : Book
-
-
+    currentBook : Book
 }

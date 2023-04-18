@@ -1,14 +1,10 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinTable} from "typeorm"
-import {inspect} from "util";
-import colors = module
-import {Author} from "./Author";
-
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import { Author } from "./Author.js";
 
 @Entity()
 export class Book {
     @PrimaryGeneratedColumn()
-    book_id: number
+    id: number
 
     @Column()
     title: string
@@ -23,10 +19,5 @@ export class Book {
     rating
 
     @Column ({type:"timestamp"})
-    publishing_timestamp
-
-
-
-
-
+    timestamp
 }

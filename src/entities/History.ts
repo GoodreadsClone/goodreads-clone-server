@@ -1,9 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinTable} from "typeorm"
-
-import {User} from "./User";
-import {Book} from "./Book";
-
-
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm"
+import { User } from "./User.js";
+import { Book } from "./Book.js";
 
 @Entity()
 export class History {
@@ -11,22 +8,14 @@ export class History {
     id: number
 
     @ManyToOne((type) => User)
-    user_id: User
+    userId: User
 
     @ManyToOne((type) => Book)
-    book_id: Book
+    bookId: Book
 
     @Column ({type:"timestamp"})
     timestamp
 
     @Column()
-    page_number:number
-
-
-
-
-
-
-
-
+    pageNumber:number
 }

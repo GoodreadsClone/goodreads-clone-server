@@ -1,11 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToOne, JoinTable} from "typeorm"
-import {inspect} from "util";
-import colors = module
-import {Author} from "./Author";
-import {User} from "./User";
-import {Book} from "./Book";
-
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm"
+import { User } from "./User.js";
+import { Book } from "./Book.js";
 
 @Entity()
 export class BucketList {
@@ -13,18 +8,11 @@ export class BucketList {
     id: number
 
     @OneToOne((type) => User)
-    user_id: User
+    userId: User
 
     @OneToOne((type) => Book)
-    book_id: Book
+    bookId: Book
 
     @Column ({type:"timestamp"})
     timestamp
-
-
-
-
-
-
-
 }

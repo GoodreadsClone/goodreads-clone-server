@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm"
 import { Book } from "./Book.js";
 
 @Entity()
@@ -12,12 +12,13 @@ export class User {
     @Column()
     lastName: string
 
-    @Column()
+    @Column({unique: true})    
     email: string
 
     @Column()
     password: string
 
     @OneToOne((type) => Book)
+    @JoinColumn()
     currentBook : Book
 }

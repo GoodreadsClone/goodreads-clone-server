@@ -17,5 +17,5 @@ export class History {
     timestamp
 
     @Column()
-    pageNumber:number
+    pageNumber: number
 }

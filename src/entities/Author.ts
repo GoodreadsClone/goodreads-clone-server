@@ -19,8 +19,8 @@ export class Author {
     rating
 
     @Column()
-    publishingHouse: string
+    genre: string
 
-    @OneToMany((type) => Book, (book) => book)
-    books: Book[]
+    @Column()
+    publishingHouse: string
 }

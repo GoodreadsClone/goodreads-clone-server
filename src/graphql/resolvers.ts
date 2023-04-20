@@ -1,3 +1,5 @@
+import { addUser, findUserByEmail } from './resolver_functions/user_resolvers.js';
+
 const books = [
     {
       id: '1',
@@ -18,6 +20,16 @@ export const resolvers = {
       book: (parent, args) => {
         const id = args.id
         return books.find(book => book.id === id)
+      },
+
+      user: (parent, { email }) => {
+        return findUserByEmail(email)
       }
     },
+
+    Mutation: {
+      addUser: (parent, { firstName, lastName, email, password }) => {
+        return addUser(firstName, lastName, email, password)
+      }
+    }
 };

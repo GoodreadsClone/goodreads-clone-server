@@ -36,11 +36,14 @@ type Query {
   books: [Book]
   users: [User]
   authors: [Author]
+}
 
+type Query {
   book(id: ID!): Book
-  # user(id: ID!): User
-  # author(id: ID!): Author
+  user(email: String!): User
+  author(id: ID!): Author
+}
 
-  # # Query comments for each book
-  # comments(bookId: ID!): [Comment]
+type Mutation {
+  addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
 }

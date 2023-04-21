@@ -13,8 +13,8 @@ export class Comments {
     @ManyToOne((type) => Book)
     bookId: Book
 
-    @Column ({type:"timestamp"})
-    timestamp
+    @Column ()
+    timestamp : string
 
     @Column()
     comment: string

@@ -13,6 +13,6 @@ export class BucketList {
     @OneToOne((type) => Book)
     bookId: Book
 
-    @Column ({type:"timestamp"})
-    timestamp
+    @Column ()
+    timestamp : string
 }

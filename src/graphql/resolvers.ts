@@ -1,35 +1,28 @@
 import { addUser, findUserByEmail } from './resolver_functions/user_resolvers.js';
-
-const books = [
-    {
-      id: '1',
-      title: 'The Awakening',
-      authorName: 'Kate Chopin',
-    },
-    {
-      id: '2',
-      title: 'City of Glass',
-      authorName: 'Paul Rohan',
-    },
-];
+import { addBook, getAllBooks, getBookById } from './resolver_functions/book_resolvers.js';
 
 export const resolvers = {
-    Query: {
-      books: () => books,
-      
-      book: (parent, args) => {
-        const id = args.id
-        return books.find(book => book.id === id)
+    Query: {      
+      book: (parent, { id }) => {
+        return getBookById(id)
       },
 
       user: (parent, { email }) => {
         return findUserByEmail(email)
-      }
+      },
+
+      books: () => getAllBooks(),
+
+      
     },
 
     Mutation: {
       addUser: (parent, { firstName, lastName, email, password }) => {
         return addUser(firstName, lastName, email, password)
+      },
+
+      addBook: (parent, { title, isbn, authorId, rating }) => {
+        return addBook(title, isbn, authorId, rating)
       }
     }
 };

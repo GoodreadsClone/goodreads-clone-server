@@ -7,10 +7,16 @@ export const addUser = async (firstName: string, lastName: string, email: string
         .createQueryBuilder()
         .insert()
         .into(User)
-        .values([
-            { firstName: firstName, lastName: lastName, email: email, password: password }
-        ])
+        .values([{
+            firstName: firstName, 
+            lastName: lastName, 
+            email: email, 
+            password: password 
+        }])
+        .returning('*')
         .execute()
+        
+        return user.raw[0]
 
     } catch(e) {
         return e
@@ -24,7 +30,7 @@ export const findUserByEmail = async (email: number) => {
         .where('user.email = :email', {email: email})
         .getOne()
         return user
-        
+
     } catch(e) {
         return e
     }

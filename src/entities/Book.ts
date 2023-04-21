@@ -12,12 +12,12 @@ export class Book {
     @Column()
     isbn: string
 
-    @ManyToOne((type) => Author)
+    @ManyToOne(() => Author, (author) => author.id)
     author: Author
 
-    @Column({type:"float"})
-    rating
+    @Column()
+    rating: number
 
-    @Column ({type:"timestamp"})
-    timestamp
+    @Column ({default: () => "CURRENT_TIMESTAMP"})
+    timestamp: string
 }

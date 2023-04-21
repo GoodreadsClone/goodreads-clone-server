@@ -1,32 +1,41 @@
-import { addUser, findUserByEmail, addBookToBucketList } from './resolver_functions/user_resolvers.js';
-import { addBook, getAllBooks, getBookById } from './resolver_functions/book_resolvers.js';
+import {
+    addBookToBucketList,
+    addCurrentlyReading,
+    addUser,
+    findUserByEmail
+} from './resolver_functions/user_resolvers.js';
+import {addBook, getAllBooks, getBookById} from './resolver_functions/book_resolvers.js';
 
 export const resolvers = {
-    Query: {      
-      book: (parent, { id }) => {
-        return getBookById(id)
-      },
+    Query: {
+        book: (parent, {id}) => {
+            return getBookById(id)
+        },
 
-      user: (parent, { email }) => {
-        return findUserByEmail(email)
-      },
+        user: (parent, {email}) => {
+            return findUserByEmail(email)
+        },
 
-      books: () => getAllBooks(),
+        books: () => getAllBooks(),
 
-      
+
     },
 
     Mutation: {
-      addUser: (parent, { firstName, lastName, email, password }) => {
-        return addUser(firstName, lastName, email, password)
-      },
+        addUser: (parent, {firstName, lastName, email, password}) => {
+            return addUser(firstName, lastName, email, password)
+        },
 
-      addBook: (parent, { title, isbn, authorId, rating }) => {
-        return addBook(title, isbn, authorId, rating)
-      },
+        addBook: (parent, {title, isbn, authorId, rating}) => {
+            return addBook(title, isbn, authorId, rating)
+        },
 
-      addBookToBucketList : (parent, {userId, bookId})=>{
-          return addBookToBucketList(userId, bookId)
-      }
+        addBookToBucketList: (parent, {userId, bookId}) => {
+            return addBookToBucketList(userId, bookId)
+        },
+
+        addCurrentlyReading: (parent, {userId, bookId}) => {
+            return addCurrentlyReading(userId, bookId)
+        }
     }
 };

@@ -64,3 +64,21 @@ export const addBookToBucketList = async (userId:User, bookId:Book)=>{
 
 }
 
+
+export const addCurrentlyReading = async (userId:User, bookId:Book)=>{
+    try {
+
+        return  await PostgresDataSource
+            .createQueryBuilder()
+            .createQueryBuilder()
+            .update(User)
+            .set({currentBook : bookId })
+            .where("id = :userId")
+            .execute()
+
+
+
+    } catch(e) {
+        return e
+    }
+}

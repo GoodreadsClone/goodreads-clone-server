@@ -70,7 +70,6 @@ export const addCurrentlyReading = async (userId:User, bookId:Book)=>{
 
         return  await PostgresDataSource
             .createQueryBuilder()
-            .createQueryBuilder()
             .update(User)
             .set({currentBook : bookId })
             .where("id = :userId")

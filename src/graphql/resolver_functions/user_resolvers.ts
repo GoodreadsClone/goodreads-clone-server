@@ -1,7 +1,7 @@
 import { PostgresDataSource } from '../../databaseconfig.js'
-import { User } from '../../entities/User.ts';
-import {Book} from '../../entities/Book.ts';
-import {BucketList} from "../../entities/BucketList";
+import { User } from '../../entities/User.js';
+import { BucketList } from "../../entities/BucketList.js";
+import { getBookById } from './book_resolvers.js';
 
 export const addUser = async (firstName: string, lastName: string, email: string, password: string) => {
     try {
@@ -39,44 +39,51 @@ export const findUserByEmail = async (email: string) => {
 }
 
 
-export const addBookToBucketList = async (userId:User, bookId:Book)=>{
-
+export const addBookToBucketList = async (userId:number, bookId:number)=>{
     try {
+        const book = await getBookById(bookId)
+        const user = await getUserById(userId)
 
-        return  await PostgresDataSource
+        const bucket_list =  await PostgresDataSource
             .createQueryBuilder()
             .insert()
             .into(BucketList)
             .values([{
-                userId : userId,
-                bookId : bookId,
-                timestamp :  new Date().toISOString()
+                user : user,
+                book : book
             }])
             .returning('*')
             .execute()
-
-
-
+        return bucket_list.raw[0]
     } catch(e) {
         return e
     }
-
-
 }
 
 
-export const addCurrentlyReading = async (userId:User, bookId:Book)=>{
+export const addCurrentlyReading = async (userId: number, bookId: number)=>{
     try {
+        const book = await getBookById(bookId)
+        const user = await getUserById(userId)
+        
+        user.currentBook = book
 
-        return  await PostgresDataSource
-            .createQueryBuilder()
-            .update(User)
-            .set({currentBook : bookId })
-            .where("id = :userId")
-            .execute()
+        PostgresDataSource.manager.save(user)
 
+        return user
+    } catch(e) {
+        return e
+    }
+}
 
+export const getUserById = async (userId: number) => {
+    try {
+        const user = await PostgresDataSource
+        .createQueryBuilder(User, 'user')
+        .where('user.id = :id', {id: userId})
+        .getOne()
 
+        return user
     } catch(e) {
         return e
     }

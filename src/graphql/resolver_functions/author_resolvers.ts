@@ -7,7 +7,7 @@ export const findAuthorById = async (id: number) => {
         .createQueryBuilder(Author, 'author')
         .where('author.id = :id', {id: id})
         .getOne()
-        console.log(author)
+
         return author
 
     } catch(e) {

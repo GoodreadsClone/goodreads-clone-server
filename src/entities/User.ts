@@ -18,7 +18,7 @@ export class User {
     @Column()
     password: string
 
-    @OneToOne((type) => Book)
+    @OneToOne(() => Book, (book) => book.id, { cascade: true })
     @JoinColumn()
     currentBook : Book
 }

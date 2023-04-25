@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, ManyToOne } from "typeorm"
 import { User } from "./User.js";
 import { Book } from "./Book.js";
 
@@ -7,12 +7,13 @@ export class BucketList {
     @PrimaryGeneratedColumn()
     id: number
 
-    @OneToOne((type) => User)
-    userId: User
+    @ManyToOne(() => User, (user) => user)
+    user: User
 
     @OneToOne((type) => Book)
-    bookId: Book
+    @JoinColumn()
+    book: Book
 
-    @Column ()
-    timestamp : string
+    @Column ({default: () => "CURRENT_TIMESTAMP"})
+    timestamp: string
 }

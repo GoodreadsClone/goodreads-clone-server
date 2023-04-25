@@ -6,12 +6,16 @@ import { Comments } from './entities/Comments.js';
 import { BucketList } from './entities/BucketList.js';
 import { History } from './entities/History.js';
 
+import * as dotenv from 'dotenv';
+
+dotenv.config()
+
 export const PostgresDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
-    port: 5432,
-    username: "postgres",
-    password: "root",
+    host: process.env.POSTGRES_HOST,
+    port: process.env.POSTGRES_PORT,
+    username: process.env.POSTGRES_USERNAME,
+    password: process.env.POSTGRES_PASSWORD,
     database: "goodreadsclone",
     entities: [User, Author, Book, Comments, BucketList, History],
     synchronize: true

@@ -9,7 +9,7 @@ export const addBook = async (title: string, isbn: string, authorId: number, rat
         if(!author) {
             throw new Error('Author with this id does not exist, create the author first')
         }
-
+        
         const book = await PostgresDataSource
         .createQueryBuilder()
         .insert()

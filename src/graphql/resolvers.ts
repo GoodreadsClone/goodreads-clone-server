@@ -2,40 +2,90 @@ import {
     addBookToBucketList,
     addCurrentlyReading,
     addUser,
-    findUserByEmail
+    findUserByEmail,
+    getUserBucketList,
+    getUserById,
+    getUserCurrentlyReadying
 } from './resolver_functions/user_resolvers.js';
-import {addBook, getAllBooks, getBookById} from './resolver_functions/book_resolvers.js';
+import {
+    addBook, 
+    getAllBooks, 
+    getBookById, 
+    getAuthorByBookId,
+    
+} from './resolver_functions/book_resolvers.js';
+import { 
+    findAuthorById,
+    getAllBooksByAuthorId 
+} from './resolver_functions/author_resolvers.js';
 
 export const resolvers = {
     Query: {
-        book: (parent, {id}) => {
-            return getBookById(id)
+        book: async (parent, {id}) => {
+            return await getBookById(id)
         },
 
-        user: (parent, {email}) => {
-            return findUserByEmail(email)
+        user: async (parent, {email}) => {
+            return await findUserByEmail(email)
         },
 
-        books: () => getAllBooks(),
+        userById: async (parent, {userId}) => {
+            return await getUserById(userId)
+        },
 
+        author: async (parent, {id}) => {
+            return await findAuthorById(id)
+        },
 
+        books: async () => await getAllBooks(),
     },
 
     Mutation: {
-        addUser: (parent, {firstName, lastName, email, password}) => {
-            return addUser(firstName, lastName, email, password)
+        addUser: async (parent, {firstName, lastName, email, password}) => {
+            return await addUser(firstName, lastName, email, password)
         },
 
-        addBook: (parent, {title, isbn, authorId, rating}) => {
-            return addBook(title, isbn, authorId, rating)
+        addBook: async (parent, {title, isbn, authorId, rating}) => {
+            return await addBook(title, isbn, authorId, rating)
         },
 
-        addBookToBucketList: (parent, {userId, bookId}) => {
-            return addBookToBucketList(userId, bookId)
+        addBookToBucketList: async (parent, {userId, bookId}) => {
+            return await addBookToBucketList(userId, bookId)
         },
 
-        addCurrentlyReading: (parent, {userId, bookId}) => {
-            return addCurrentlyReading(userId, bookId)
+        addCurrentlyReading: async (parent, {userId, bookId}) => {
+            return await addCurrentlyReading(userId, bookId)
+        }
+    },
+
+    User: {
+        wantToReads: async (parent) => {
+            return await getUserBucketList(parent.id)
+        },
+
+        currentlyReading: async (parent) => {
+            return await getUserCurrentlyReadying(parent.id)
+        }
+    },
+
+    BucketList: {
+        user: async (parent) => {
+            return await getUserById(parent.userId)
+        },
+        book: async (parent) => {
+            return await getBookById(parent.bookId)
+        }
+    },
+
+    Book: {
+        author: async (parent) => {
+            return await getAuthorByBookId(parent.id)
+        }
+    },
+
+    Author: {
+        books: async (parent) => {
+            return await getAllBooksByAuthorId(parent.id)
         }
     }
 };

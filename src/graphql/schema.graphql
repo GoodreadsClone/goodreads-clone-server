@@ -11,7 +11,8 @@ type User {
   firstName: String!
   lastName: String!
   email: String!
-  books: [Book]
+  # This will be added after history and it's resolvers are completed
+  # books: [Book] 
   wantToReads: [Book]
   currentlyReading: Book
 }
@@ -38,6 +39,15 @@ type BucketList{
   timeStamp: String
 }
 
+enum ResponseStatus {
+  SUCCESS
+  FAILURE
+}
+
+type AddCurrentlyReadingResponse {
+  status: ResponseStatus!
+}
+
 type Query {
   books: [Book]
   users: [User]
@@ -50,10 +60,19 @@ type Query {
   author(id: ID!): Author
 }
 
+type Query {
+  userById(userId: ID!): User
+  getUserBucketList(userId: ID!): [BucketList]
+}
+
+# Admin level mutations
 type Mutation {
   addUser(firstName: String!, lastName: String!, email: String!, password: String!): User
   addBook(title: String!, isbn: String!, authorId: Int!, rating: Float!): Book
+}
+
+# User Mutations
+type Mutation {
   addBookToBucketList(userId:Int!, bookId:Int!): BucketList
-  updateCurrentBook(userId:Int!, bookId:Int!): User
-  addCurrentlyReading(userId: Int!, bookId: Int!): User
+  addCurrentlyReading(userId: Int!, bookId: Int!): AddCurrentlyReadingResponse
 }

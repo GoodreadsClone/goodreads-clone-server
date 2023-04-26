@@ -1,5 +1,6 @@
 import { PostgresDataSource } from '../../databaseconfig.js'
 import { Book } from '../../entities/Book.js';
+import { Author } from '../../entities/Author.js';
 import { findAuthorById } from './author_resolvers.js';
 
 export const addBook = async (title: string, isbn: string, authorId: number, rating: number) => {
@@ -49,6 +50,20 @@ export const getBookById = async (id: number) => {
         .getOne()
 
         return book
+    } catch(e) {
+        return e
+    }
+}
+
+export const getAuthorByBookId = async (bookId: number) => {
+    try {
+        const book = await PostgresDataSource
+        .createQueryBuilder(Book, 'book')
+        .leftJoinAndSelect('book.author', 'author')
+        .where('book.id = :bookId', {bookId: bookId})
+        .getOne()
+
+        return book.author
     } catch(e) {
         return e
     }
